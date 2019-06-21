@@ -19,17 +19,22 @@ var Stopwatch = function (_React$Component) {
 		_this.display = display;
 		_this.state = {
 			running: false,
+			dom: null,
 			times: {
 				minutes: 0,
 				seconds: 0,
 				miliseconds: 0
 			}
 		};
+
 		_this.print(_this.state.time);
 
 		_this.print = _this.print.bind(_this);
 		_this.start = _this.start.bind(_this);
 		_this.step = _this.step.bind(_this);
+		_this.stop = _this.stop.bind(_this);
+		_this.reset = _this.reset.bind(_this);
+		_this.save = _this.save.bind(_this);
 		return _this;
 	}
 
@@ -55,8 +60,7 @@ var Stopwatch = function (_React$Component) {
 	}, {
 		key: 'print',
 		value: function print() {
-			console.log(this.state);
-			return this.display.innerText = this.format(this.state.times);
+			return this.display = this.format(this);
 		}
 	}, {
 		key: 'format',
@@ -68,6 +72,7 @@ var Stopwatch = function (_React$Component) {
 		value: function start() {
 			var _this2 = this;
 
+			this.handleOnClick(element);
 			if (!this.state.running) {
 				this.state.running = true;
 				this.watch = setInterval(function () {
@@ -79,16 +84,10 @@ var Stopwatch = function (_React$Component) {
 	}, {
 		key: 'step',
 		value: function step() {
+			this.handleOnClick(element);
 			if (!this.state.running) return;
 			this.calculate();
-			this.print();
-		}
-	}, {
-		key: 'step',
-		value: function step() {
-			if (!this.state.running) return;
-			this.calculate();
-			this.print();
+			this.print(this.state.times);
 		}
 	}, {
 		key: 'calculate',
@@ -106,6 +105,29 @@ var Stopwatch = function (_React$Component) {
 			}
 		}
 	}, {
+		key: 'stop',
+		value: function stop() {
+			this.handleOnClick(element);
+			this.state.running = false;
+			clearInterval(this.watch);
+		}
+	}, {
+		key: 'save',
+		value: function save() {
+			var time = this.format(this.state.times);
+			var item = document.createElement('li');
+			var itemContent = document.createTextNode(time);
+			item.appendChild(itemContent);
+			var res = document.querySelector('.results');
+			res.appendChild(item);
+		}
+	}, {
+		key: 'clear',
+		value: function clear() {
+			var res = document.querySelector('.results');
+			res.innerHTML = '';
+		}
+	}, {
 		key: 'pad0',
 		value: function pad0(value) {
 			var result = value.toString();
@@ -117,7 +139,7 @@ var Stopwatch = function (_React$Component) {
 	}, {
 		key: 'render',
 		value: function render() {
-			return React.createElement('div', { className: 'text-center mb-2 mt-3' }, React.createElement('div', { className: 'controls' }, React.createElement('a', { className: 'btn btn-secondary pl-2 ml-2', href: '#', onClick: this.start }, 'start'), React.createElement('a', { className: 'btn btn-secondary pl-2 ml-2', href: '#', onClick: this.stop }, 'stop'), React.createElement('a', { className: 'btn btn-secondary pl-2 ml-2', href: '#', onClick: this.reset }, 'reset'), React.createElement('a', { className: 'btn btn-secondary pl-2 ml-2', href: '#', onClick: this.get }, 'add to list'), React.createElement('a', { className: 'btn btn-secondary pl-2 ml-2', href: '#', onClick: this.clear }, 'clear list')), React.createElement('div', { id: 'stopwatch', className: "mt-3" }, this.print()), React.createElement('ul', { className: 'results' }));
+			return React.createElement('div', { className: 'text-center mb-2 mt-3' }, React.createElement('div', { className: 'controls' }, React.createElement('a', { className: 'btn btn-secondary pl-2 ml-2', href: '#', onClick: this.start }, 'start'), React.createElement('a', { className: 'btn btn-secondary pl-2 ml-2', href: '#', onClick: this.stop }, 'stop'), React.createElement('a', { className: 'btn btn-secondary pl-2 ml-2', href: '#', onClick: this.reset }, 'reset'), React.createElement('a', { className: 'btn btn-secondary pl-2 ml-2', href: '#', onClick: this.save }, 'add to list'), React.createElement('a', { className: 'btn btn-secondary pl-2 ml-2', href: '#', onClick: this.clear }, 'clear list')), React.createElement('div', { id: 'stopwatch', className: "clock mt-3" }, this.print()), React.createElement('ul', { className: 'results' }));
 		}
 	}]);
 
