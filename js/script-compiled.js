@@ -4,36 +4,106 @@ var _createClass = function () { function defineProperties(target, props) { for 
 
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
 
-var Stopwatch = function () {
-	function Stopwatch(display) {
+function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
+
+function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+
+var Stopwatch = function (_React$Component) {
+	_inherits(Stopwatch, _React$Component);
+
+	function Stopwatch(props, display) {
 		_classCallCheck(this, Stopwatch);
 
-		this.running = false;
-		this.display = display;
-		this.reset();
-		this.print(this.times);
-	}
+		var _this = _possibleConstructorReturn(this, (Stopwatch.__proto__ || Object.getPrototypeOf(Stopwatch)).call(this, props));
 
-	_createClass(Stopwatch, [{
-		key: 'reset',
-		value: function reset() {
-			this.times = {
+		_this.display = display;
+		_this.state = {
+			running: false,
+			times: {
 				minutes: 0,
 				seconds: 0,
 				miliseconds: 0
-			};
-			this.print();
+			}
+		};
+		_this.print(_this.state.time);
+
+		_this.print = _this.print.bind(_this);
+		_this.start = _this.start.bind(_this);
+		_this.step = _this.step.bind(_this);
+		return _this;
+	}
+
+	_createClass(Stopwatch, [{
+		key: 'handleOnClick',
+		value: function handleOnClick(e) {
+			this.setState({
+				loading: true
+			});
+		}
+	}, {
+		key: 'reset',
+		value: function reset() {
+			this.setState({
+				running: false,
+				times: {
+					minutes: 0,
+					seconds: 0,
+					miliseconds: 0
+				}
+			}), this.print();
 		}
 	}, {
 		key: 'print',
-		value: function print(times) {
-			times = this.times;
-			this.display.innerText = this.format(times);
+		value: function print() {
+			console.log(this.state);
+			return this.display.innerText = this.format(this.state.times);
 		}
 	}, {
 		key: 'format',
 		value: function format(times) {
-			return this.pad0(times.minutes) + ':' + this.pad0(times.seconds) + ':' + this.pad0(Math.floor(times.miliseconds));
+			return this.pad0(this.state.times.minutes) + ':' + this.pad0(this.state.times.seconds) + ':' + this.pad0(Math.floor(this.state.times.miliseconds));
+		}
+	}, {
+		key: 'start',
+		value: function start() {
+			var _this2 = this;
+
+			if (!this.state.running) {
+				this.state.running = true;
+				this.watch = setInterval(function () {
+					return _this2.step();
+				}, 10);
+				console.log(this.watch);
+			}
+		}
+	}, {
+		key: 'step',
+		value: function step() {
+			if (!this.state.running) return;
+			this.calculate();
+			this.print();
+		}
+	}, {
+		key: 'step',
+		value: function step() {
+			if (!this.state.running) return;
+			this.calculate();
+			this.print();
+		}
+	}, {
+		key: 'calculate',
+		value: function calculate() {
+			this.state.times.miliseconds += 1;
+
+			if (this.state.times.miliseconds >= 100) {
+				this.state.times.seconds += 1;
+				this.state.times.miliseconds = 0;
+			}
+
+			if (this.state.times.seconds >= 60) {
+				this.state.times.minutes += 1;
+				this.state.times.seconds = 0;
+			}
 		}
 	}, {
 		key: 'pad0',
@@ -45,70 +115,14 @@ var Stopwatch = function () {
 			return result;
 		}
 	}, {
-		key: 'start',
-		value: function start() {
-			var _this = this;
-
-			if (!this.running) {
-				this.running = true;
-				this.watch = setInterval(function () {
-					return _this.step();
-				}, 10);
-			}
-		}
-	}, {
-		key: 'step',
-		value: function step() {
-			if (!this.running) return;
-			this.calculate();
-			this.print();
-		}
-	}, {
-		key: 'calculate',
-		value: function calculate() {
-			this.times.miliseconds += 1;
-			if (this.times.miliseconds >= 100) {
-				this.times.seconds += 1;
-				this.times.miliseconds = 0;
-			}
-			if (this.times.seconds >= 60) {
-				this.times.minutes += 1;
-				this.times.seconds = 0;
-			}
-		}
-	}, {
-		key: 'stop',
-		value: function stop() {
-			this.running = false;
-			clearInterval(this.watch);
+		key: 'render',
+		value: function render() {
+			return React.createElement('div', { className: 'text-center mb-2 mt-3' }, React.createElement('div', { className: 'controls' }, React.createElement('a', { className: 'btn btn-secondary pl-2 ml-2', href: '#', onClick: this.start }, 'start'), React.createElement('a', { className: 'btn btn-secondary pl-2 ml-2', href: '#', onClick: this.stop }, 'stop'), React.createElement('a', { className: 'btn btn-secondary pl-2 ml-2', href: '#', onClick: this.reset }, 'reset'), React.createElement('a', { className: 'btn btn-secondary pl-2 ml-2', href: '#', onClick: this.get }, 'add to list'), React.createElement('a', { className: 'btn btn-secondary pl-2 ml-2', href: '#', onClick: this.clear }, 'clear list')), React.createElement('div', { id: 'stopwatch', className: "mt-3" }, this.print()), React.createElement('ul', { className: 'results' }));
 		}
 	}]);
 
 	return Stopwatch;
-}();
+}(React.Component);
 
-var stopwatch = new Stopwatch(document.querySelector('.stopwatch'));
-
-var startButton = document.getElementById('start');
-startButton.addEventListener('click', function () {
-	return stopwatch.start();
-});
-
-var stopButton = document.getElementById('stop');
-stopButton.addEventListener('click', function () {
-	return stopwatch.stop();
-});
-
-var resetButton = document.getElementById('reset');
-resetButton.addEventListener('click', function () {
-	return stopwatch.reset();
-});
-
-var timeListButton = document.getElementById('timeListButton');
-var timeList = document.querySelector('.results');
-
-timeListButton.addEventListener('click', function () {
-	var element = document.createElement('LI');
-	element.innerText = stopwatch.format(stopwatch.times);
-	timeList.appendChild(element);
-});
+var element = React.createElement(Stopwatch);
+ReactDOM.render(element, document.getElementById('app'));
