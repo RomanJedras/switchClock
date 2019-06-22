@@ -99,11 +99,11 @@ class Stopwatch extends React.Component {
 		return (
 			React.createElement('div', {className: 'text-center mb-2 mt-3'},
 				React.createElement('div', {className: 'controls' },
-					React.createElement('a', {className: 'btn btn-secondary pl-2 ml-2', href:'#' ,onClick: this.start}, 'start'),
-					React.createElement('a', {className: 'btn btn-secondary pl-2 ml-2',href:'#',onClick: this.stop}, 'stop'),
-					React.createElement('a', {className: 'btn btn-secondary pl-2 ml-2',href:'#',onClick: this.reset}, 'reset'),
-					React.createElement('a', {className: 'btn btn-secondary pl-2 ml-2',href:'#',onClick: this.save}, 'add to list'),
-					React.createElement('a', {className: 'btn btn-secondary pl-2 ml-2',href:'#',onClick: this.clear}, 'clear list')
+					React.createElement('a', {className: 'btn btn-secondary pl-2 ml-2', href:'#' ,onClick: element.start}, 'start'),
+					React.createElement('a', {className: 'btn btn-secondary pl-2 ml-2',href:'#',onClick: element.stop}, 'stop'),
+					React.createElement('a', {className: 'btn btn-secondary pl-2 ml-2',href:'#',onClick: element.reset}, 'reset'),
+					React.createElement('a', {className: 'btn btn-secondary pl-2 ml-2',href:'#',onClick: element.save}, 'add to list'),
+					React.createElement('a', {className: 'btn btn-secondary pl-2 ml-2',href:'#',onClick: element.clear}, 'clear list')
 				),
 				React.createElement('div', {id: 'stopwatch', className: "clock mt-3"}),
 				React.createElement('ul', {className: 'results'})
