@@ -13,8 +13,9 @@ class Stopwatch extends React.Component {
 		
 		element.print(element.state.time);
 	}
+	
 	handleOnClick(e) {
-		this.setState({
+		e.setState({
 			loading: true,
 		});
 	}
