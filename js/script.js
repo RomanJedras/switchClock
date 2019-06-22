@@ -1,5 +1,5 @@
 class Stopwatch extends React.Component {
-	constructor(props,display) {
+	constructor(props) {
 		super(props);
 		this.display = display;
 		this.state = {
