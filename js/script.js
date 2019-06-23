@@ -44,7 +44,7 @@ class Stopwatch extends React.Component {
 		if(!this.state.running) {
 	  	this.state.running = true;
 		  this.watch = setInterval(() => this.step(),10);
-		  console.log(e.watch);
+		  console.log(this.watch);
 	  }
 	}
 	
