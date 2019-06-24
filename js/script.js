@@ -31,6 +31,7 @@ class Stopwatch extends React.Component {
 	handleReset = () => {
 		this.setState ({
 			running: false,
+			count: 0,
 			times: {
 				minutes: 0,
 				seconds: 0,
@@ -64,14 +65,14 @@ class Stopwatch extends React.Component {
 	 
 		this.setState({
 			times: {
-				miliseconds: 1
+				miliseconds: this.state.count + 1
 			}
 		})
 		
 		if (this.state.times.miliseconds >= 100) {
 			this.setState({
 				times: {
-					seconds: 1,
+					seconds: this.state.count + 1,
 					miliseconds: 0
 				}
 			});
@@ -80,7 +81,7 @@ class Stopwatch extends React.Component {
 			if (this.state.times.seconds >= 60) {
 				this.setState({
 					times: {
-						minutes: 1,
+						minutes: this.state.count + 1,
 						seconds: 0
 					}
 				})
@@ -98,10 +99,10 @@ class Stopwatch extends React.Component {
 	handleSave  = () => {
 		
 		return (
-			<>
-				const listItem = React.createItem('li',null,this.format(this.state.times));
-			</>
-			ReactDOM.render(listItem, document.querySelector('.results'))
+			<React.Fragment>
+			const listItem = React.createItem('li',null,this.format(this.state.times));
+				ReactDOM.render(listItem, document.querySelector('.results'))
+			</React.Fragment>
 		);
 	}
 	
