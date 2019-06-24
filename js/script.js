@@ -17,7 +17,6 @@ class Stopwatch extends React.Component {
 	
 	static propTypes = {
 		running: React.PropTypes.bool.isRequired,
-		count: React.PropTypes.int.isRequired,
 		times: React.PropTypes.object.isRequired,
 	}
 	
