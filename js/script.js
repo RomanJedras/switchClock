@@ -28,8 +28,7 @@ class Stopwatch extends React.Component {
 		})
 	)}
 	
-	handleOnreset = () => {
-	return (
+	handleReset = () => {
 		this.setState ({
 			running: false,
 			times: {
@@ -37,7 +36,7 @@ class Stopwatch extends React.Component {
 				seconds: 0,
 				miliseconds: 0
 			}
-		})
+		}
 	)}
 	
 	
@@ -45,16 +44,14 @@ class Stopwatch extends React.Component {
 		return `${this.pad0(this.state.times.minutes)}:${this.pad0(this.state.times.seconds)}:${this.pad0(Math.floor(this.state.times.miliseconds))}`;
 	}
 	
-	handleOnstart = () => {
+	handleStart = () => {
 		
 		if(!this.state.running) {
 			this.setState({
 				running : true
 			})
-	   return (
 		this.watch = setInterval(() => this.step(),10)
-		)
-	  }
+		}
 	}
 	
 	step = () => {
@@ -64,12 +61,12 @@ class Stopwatch extends React.Component {
 	)}
 	
 	calculate = () => {
-	 return (
+	 
 		this.setState({
 			times: {
 				miliseconds: 1
 			}
-		});
+		})
 		
 		if (this.state.times.miliseconds >= 100) {
 			this.setState({
@@ -87,20 +84,18 @@ class Stopwatch extends React.Component {
 						seconds: 0
 					}
 				})
-			});
+			}
 		}
 	
-	handleOnstop = () => {
-	 return (
+	handleStop = () => {
 	 	this.setState({
 		running: false
-		});
+		);
 	 	
 	 	clearInterval(this.watch)
-	);
-	}
+	 	}
 	
-	handleOnsave  = () => {
+	handleSave  = () => {
 		
 		return (
 			<>
@@ -110,7 +105,7 @@ class Stopwatch extends React.Component {
 		);
 	}
 	
-	handleOnclear = () => {
+	handleClear = () => {
 	     delete listItem;
 	}
 	
@@ -127,11 +122,11 @@ class Stopwatch extends React.Component {
 		return (
 			React.createElement('div', {className: 'text-center mb-2 mt-3'},
 				React.createElement('div', {className: 'controls' },
-					React.createElement('a', {className: 'btn btn-secondary pl-2 ml-2', href:'#' ,onClick: this.handleOnstart}, 'start'),
-					React.createElement('a', {className: 'btn btn-secondary pl-2 ml-2',href:'#',onClick: this.handleOnstop()}, 'stop'),
-					React.createElement('a', {className: 'btn btn-secondary pl-2 ml-2',href:'#',onClick: this.handleOnreset}, 'reset'),
-					React.createElement('a', {className: 'btn btn-secondary pl-2 ml-2',href:'#',onClick: this.handleOnsave}, 'add to list'),
-					React.createElement('a', {className: 'btn btn-secondary pl-2 ml-2',href:'#',onClick: this.handleOnclear}, 'clear list')
+					React.createElement('a', {className: 'btn btn-secondary pl-2 ml-2', href:'#' ,onClick: this.handleStart}, 'start'),
+					React.createElement('a', {className: 'btn btn-secondary pl-2 ml-2',href:'#',onClick: this.handleStop()}, 'stop'),
+					React.createElement('a', {className: 'btn btn-secondary pl-2 ml-2',href:'#',onClick: this.handleReset}, 'reset'),
+					React.createElement('a', {className: 'btn btn-secondary pl-2 ml-2',href:'#',onClick: this.handleSave}, 'add to list'),
+					React.createElement('a', {className: 'btn btn-secondary pl-2 ml-2',href:'#',onClick: this.handleClear}, 'clear list')
 				),
 				React.createElement('div', {id: 'stopwatch', className: "clock mt-3"}),
 				React.createElement('ul', {className: 'results'})
