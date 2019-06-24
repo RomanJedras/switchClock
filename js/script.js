@@ -17,12 +17,14 @@ class Stopwatch extends React.Component {
 	}
 	
 	handleOnClick() {
+		return (
 		this.setState({
 			loading: true,
-		});
-	}
+		})
+	)}
 	
-	reset = () => {
+	handleOnreset = () => {
+	return (
 		this.setState ({
 			running: false,
 			times: {
@@ -31,10 +33,7 @@ class Stopwatch extends React.Component {
 				miliseconds: 0
 			}
 		})
-		
-	}
-	
-	
+	)}
 	
 	
 	format(times) {
@@ -47,23 +46,25 @@ class Stopwatch extends React.Component {
 			this.setState({
 				running : true
 			})
-		this.watch = setInterval(() => this.step(),10);
+	   return (
+		this.watch = setInterval(() => this.step(),10)
+		)
 	  }
 	}
 	
-	handleOnstep = () => {
+	step = () => {
 		if (!this.state.running);
-		this.handleOncalculate();
-		
-	}
+		return (
+			this.calculate()
+	)}
 	
-	handleOncalculate = () => {
+	calculate = () => {
 	 return (
 		this.setState({
 			times: {
 				miliseconds: 1
 			}
-		})
+		});
 		
 		if (this.state.times.miliseconds >= 100) {
 			this.setState({
@@ -72,7 +73,8 @@ class Stopwatch extends React.Component {
 					miliseconds: 0
 				}
 			});
-			
+		}
+		
 			if (this.state.times.seconds >= 60) {
 				this.setState({
 					times: {
@@ -80,23 +82,23 @@ class Stopwatch extends React.Component {
 						seconds: 0
 					}
 				})
-			}
-		);
+			});
 		}
 	
 	handleOnstop = () => {
 	 return (
 	 	this.setState({
 		running: false
-		})
-		
-	 this.clearInterval(this.watch)
+		});
+	 	
+	 	clearInterval(this.watch)
 	);
 	}
 	
 	handleOnsave  = () => {
-		return ( const listItem = React.createItem('li',null,this.format(this.state.times)),
-			ReactDOM.render(listItem, document.querySelector('.results'));
+		const listItem = React.createItem('li',null,this.format(this.state.times));
+		return (
+			ReactDOM.render(listItem, document.querySelector('.results'))
 		);
 	}
 	
@@ -119,7 +121,7 @@ class Stopwatch extends React.Component {
 				React.createElement('div', {className: 'controls' },
 					React.createElement('a', {className: 'btn btn-secondary pl-2 ml-2', href:'#' ,onClick: this.handleOnstart}, 'start'),
 					React.createElement('a', {className: 'btn btn-secondary pl-2 ml-2',href:'#',onClick: this.handleOnstop()}, 'stop'),
-					React.createElement('a', {className: 'btn btn-secondary pl-2 ml-2',href:'#',onClick: this.reset}, 'reset'),
+					React.createElement('a', {className: 'btn btn-secondary pl-2 ml-2',href:'#',onClick: this.handleOnreset}, 'reset'),
 					React.createElement('a', {className: 'btn btn-secondary pl-2 ml-2',href:'#',onClick: this.handleOnsave}, 'add to list'),
 					React.createElement('a', {className: 'btn btn-secondary pl-2 ml-2',href:'#',onClick: this.handleOnclear}, 'clear list')
 				),
