@@ -1,4 +1,5 @@
 import React from 'react';
+import PropTypes from 'prop-types'
 import ReactDOM from 'react-dom';
 
 class Stopwatch extends React.Component {
@@ -6,7 +7,6 @@ class Stopwatch extends React.Component {
 		super(props);
 		this.state = {
 			running : false,
-			dom: null,
 			times: {
 				minutes: 0,
 				seconds: 0,
@@ -14,6 +14,11 @@ class Stopwatch extends React.Component {
 			},
 		};
 		
+	}
+	
+	static propTypes = {
+		running: React.PropTypes.bool.isRequired,
+		times: React.PropTypes.object.isRequired,
 	}
 	
 	handleOnClick() {
