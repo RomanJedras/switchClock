@@ -6,7 +6,6 @@ class Stopwatch extends React.Component {
 		super(props);
 		this.state = {
 			running : false,
-			count: 0,
 			times: {
 				minutes: 0,
 				seconds: 0,
@@ -32,7 +31,6 @@ class Stopwatch extends React.Component {
 	handleReset = () => {
 		this.setState ({
 			running: false,
-			count: 0,
 			times: {
 				minutes: 0,
 				seconds: 0,
