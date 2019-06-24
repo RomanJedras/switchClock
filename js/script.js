@@ -7,6 +7,7 @@ class Stopwatch extends React.Component {
 		super(props);
 		this.state = {
 			running : false,
+			count: 0,
 			times: {
 				minutes: 0,
 				seconds: 0,
@@ -18,6 +19,7 @@ class Stopwatch extends React.Component {
 	
 	static propTypes = {
 		running: React.PropTypes.bool.isRequired,
+		count: React.PropTypes.int.isRequired,
 		times: React.PropTypes.object.isRequired,
 	}
 	
@@ -89,11 +91,10 @@ class Stopwatch extends React.Component {
 		}
 	
 	handleStop = () => {
-	 	this.setState({
-		running: false
-		);
-	 	
-	 	clearInterval(this.watch)
+		this.setState({
+			running : false
+		});
+		clearInterval(this.watch)
 	 	}
 	
 	handleSave  = () => {
