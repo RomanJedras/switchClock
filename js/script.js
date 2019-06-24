@@ -101,8 +101,11 @@ class Stopwatch extends React.Component {
 	}
 	
 	handleOnsave  = () => {
-		const listItem = React.createItem('li',null,this.format(this.state.times));
+		
 		return (
+			<>
+				const listItem = React.createItem('li',null,this.format(this.state.times));
+			</>
 			ReactDOM.render(listItem, document.querySelector('.results'))
 		);
 	}
