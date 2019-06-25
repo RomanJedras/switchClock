@@ -44,7 +44,6 @@ class Stopwatch extends React.Component {
 	}
 	
 	handleStart = () => {
-		
 		if(!this.state.running) {
 			this.setState({
 				running : true
@@ -60,31 +59,34 @@ class Stopwatch extends React.Component {
 	)}
 	
 	calculate = () => {
-	 
-		this.setState({
+		
+		this.setState(prevState => ({
 			times: {
-				miliseconds: this.state.miliseconds + 1
+				miliseconds:[...prevState.times.miliseconds,++this.state.miliseconds]
 			}
 		})
+		)
 		
 		if (this.state.times.miliseconds >= 100) {
-			this.setState({
+			this.setState(prevState => ({
 				times: {
-					seconds: this.state.seconds + 1,
+					seconds: [...prevState.times.seconds, ++this.state.seconds],
 					miliseconds: 0
-				}
-			});
+				},
+			}))
 		}
-		
-			if (this.state.times.seconds >= 60) {
-				this.setState({
-					times: {
-						minutes: this.state.minutes + 1,
-						seconds: 0
-					}
-				})
-			}
+			
+			
+		if (this.state.times.seconds >= 60) {
+			this.setState(prevState => ({
+				times: {
+					minutes: [...prevState.times.minutes, ++this.state.minutes],
+					miliseconds: 0
+					
+				},
+			}))
 		}
+	};
 	
 	handleStop = () => {
 		this.setState({

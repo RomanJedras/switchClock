@@ -12,7 +12,7 @@
     "init-babel": "babel js/script.js --watch --out-file js/script-compiled.js",
     "browsersync": "browser-sync start --server  --files css/*.css *.html",
     "scss": "node-sass  --output-style compact  -watch  -o css sass",
-    "start": "http-server"
+    "start": "react-scripts start"
   },
   "author": "",
   "license": "ISC",
@@ -40,6 +40,7 @@
     "babel-preset-latest": "^6.24.1",
     "http-server": "^0.11.1",
     "stylelint-prettier": "^1.0.6",
-    "prop-types": "latest"
+    "prop-types": "latest",
+    "react-scripts": "2.1.1"
   }
 }
