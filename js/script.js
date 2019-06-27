@@ -12,12 +12,6 @@ class Stopwatch extends React.Component {
 				miliseconds: 0
 			},
 		};
-		
-	}
-	
-	static propTypes = {
-		running: React.PropTypes.bool.isRequired,
-		times: React.PropTypes.object.isRequired,
 	}
 	
 	
@@ -150,6 +144,12 @@ class Stopwatch extends React.Component {
 		);
 	}
 }
+
+Stopwatch.propTypes = {
+	running: React.PropTypes.bool.isRequired,
+	times: React.PropTypes.object.isRequired,
+}
+
 
 const element = React.createElement(Stopwatch);
 ReactDOM.render(element, document.getElementById('app'));
