@@ -2,10 +2,10 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 
 class Stopwatch extends React.Component {
-	constructor(props) {
+	constructor (props) {
 		super(props);
 		this.state = {
-			running : false,
+			running: false,
 			times: {
 				minutes: 0,
 				seconds: 0,
@@ -20,51 +20,47 @@ class Stopwatch extends React.Component {
 		times: React.PropTypes.object.isRequired,
 	}
 	
-	handleOnClick() {
-		return (
-		this.setState({
-			loading: true,
-		})
-	)}
 	
 	handleReset = () => {
-		this.setState ({
-			running: false,
-			times: {
-				minutes: 0,
-				seconds: 0,
-				miliseconds: 0
+		this.setState({
+				running: false,
+				times: {
+					minutes: 0,
+					seconds: 0,
+					miliseconds: 0
+				}
 			}
-		}
-	)}
+		)
+	}
 	
 	
-	format(times) {
+	format () {
 		return `${this.pad0(this.state.times.minutes)}:${this.pad0(this.state.times.seconds)}:${this.pad0(Math.floor(this.state.times.miliseconds))}`;
 	}
 	
 	handleStart = () => {
-		if(!this.state.running) {
+		if (!this.state.running) {
 			this.setState({
-				running : true
+				running: true
 			})
-		this.watch = setInterval(() => this.step(),10)
+			this.watch = setInterval(() => this.step(), 10)
 		}
 	}
 	
 	step = () => {
-		if (!this.state.running);
+		if (!this.state.running) ;
 		return (
 			this.calculate()
-	)}
+		)
+	}
 	
 	calculate = () => {
 		
 		this.setState(prevState => ({
-			times: {
-				miliseconds:[...prevState.times.miliseconds,++this.state.miliseconds]
-			}
-		})
+				times: {
+					miliseconds: [...prevState.times.miliseconds, ++this.state.miliseconds]
+				}
+			})
 		)
 		
 		if (this.state.times.miliseconds >= 100) {
@@ -75,8 +71,8 @@ class Stopwatch extends React.Component {
 				},
 			}))
 		}
-			
-			
+		
+		
 		if (this.state.times.seconds >= 60) {
 			this.setState(prevState => ({
 				times: {
@@ -90,23 +86,23 @@ class Stopwatch extends React.Component {
 	
 	handleStop = () => {
 		this.setState({
-			running : false
+			running: false
 		});
 		clearInterval(this.watch)
-	 	}
+	}
 	
-	handleSave  = () => {
+	handleSave = () => {
 		
 		return (
 			<React.Fragment>
-			const listItem = React.createItem('li',null,this.format(this.state.times));
+				const listItem = React.createItem('li',null,this.format(this.state.times));
 				ReactDOM.render(listItem, document.querySelector('.results'))
 			</React.Fragment>
 		);
 	}
 	
 	handleClear = () => {
-	     delete listItem;
+		delete listItem;
 	}
 	
 	
@@ -121,12 +117,32 @@ class Stopwatch extends React.Component {
 	render = () => {
 		return (
 			React.createElement('div', {className: 'text-center mb-2 mt-3'},
-				React.createElement('div', {className: 'controls' },
-					React.createElement('a', {className: 'btn btn-secondary pl-2 ml-2', href:'#' ,onClick: this.handleStart}, 'start'),
-					React.createElement('a', {className: 'btn btn-secondary pl-2 ml-2',href:'#',onClick: this.handleStop()}, 'stop'),
-					React.createElement('a', {className: 'btn btn-secondary pl-2 ml-2',href:'#',onClick: this.handleReset}, 'reset'),
-					React.createElement('a', {className: 'btn btn-secondary pl-2 ml-2',href:'#',onClick: this.handleSave}, 'add to list'),
-					React.createElement('a', {className: 'btn btn-secondary pl-2 ml-2',href:'#',onClick: this.handleClear}, 'clear list')
+				React.createElement('div', {className: 'controls'},
+					React.createElement('a', {
+						className: 'btn btn-secondary pl-2 ml-2',
+						href: '#',
+						onClick: this.handleStart
+					}, 'start'),
+					React.createElement('a', {
+						className: 'btn btn-secondary pl-2 ml-2',
+						href: '#',
+						onClick: this.handleStop()
+					}, 'stop'),
+					React.createElement('a', {
+						className: 'btn btn-secondary pl-2 ml-2',
+						href: '#',
+						onClick: this.handleReset
+					}, 'reset'),
+					React.createElement('a', {
+						className: 'btn btn-secondary pl-2 ml-2',
+						href: '#',
+						onClick: this.handleSave
+					}, 'add to list'),
+					React.createElement('a', {
+						className: 'btn btn-secondary pl-2 ml-2',
+						href: '#',
+						onClick: this.handleClear
+					}, 'clear list')
 				),
 				React.createElement('div', {id: 'stopwatch', className: "clock mt-3"}),
 				React.createElement('ul', {className: 'results'})
