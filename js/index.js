@@ -1,5 +1,9 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
+require("@babel/core").transform("code", {
+	plugins: ["@babel/plugin-transform-react-jsx"]
+});
+
 
 class Stopwatch extends React.Component {
 	constructor (props) {
@@ -42,10 +46,7 @@ class Stopwatch extends React.Component {
 	}
 	
 	step = () => {
-		if (!this.state.running) ;
-		return (
-			this.calculate()
-		)
+		if (!this.state.running) return this.calculate()
 	}
 	
 	calculate = () => {
@@ -88,15 +89,13 @@ class Stopwatch extends React.Component {
 	handleSave = () => {
 		
 		return (
-			<React.Fragment>
-				const listItem = React.createItem('li',null,this.format(this.state.times));
-				ReactDOM.render(listItem, document.querySelector('.results'))
-			</React.Fragment>
+			   listItem = React.createItem('li',null,this.format(this.state.times)),
+			   ReactDOM.render(listItem, document.querySelector('.results'))
 		);
 	}
 	
 	handleClear = () => {
-		delete listItem;
+		 listItem = '';
 	}
 	
 	
@@ -108,42 +107,25 @@ class Stopwatch extends React.Component {
 	}
 	
 	
+	 profile = <div className={'wrapper'}>
+		<div className={'text-center mb-2 mt-3'}>
+			<a href={"#"} className={'btn btn-secondary pl-2 ml-2'} onClick={this.handleStart}>start</a>
+			<a href={"#"} className={'btn btn-secondary pl-2 ml-2'} onClick={this.handleStop}>stop</a>
+			<a href={"#"} className={'btn btn-secondary pl-2 ml-2'} onClick={this.handleReset}>reset</a>
+			<a href={"#"} className={'btn btn-secondary pl-2 ml-2'} onClick={this.handleSave}>add to list</a>
+			<a href={"#"} className={'btn btn-secondary pl-2 ml-2'} onClick={this.handleClear}>clear list</a>
+		</div>
+		<div id={'stopwatch'} className={'clock mt-3'}></div>
+		<ul className={'results'}></ul>
+	</div>
+	
+	
 	render = () => {
 		return (
-			React.createElement('div', {className: 'text-center mb-2 mt-3'},
-				React.createElement('div', {className: 'controls'},
-					React.createElement('a', {
-						className: 'btn btn-secondary pl-2 ml-2',
-						href: '#',
-						onClick: this.handleStart
-					}, 'start'),
-					React.createElement('a', {
-						className: 'btn btn-secondary pl-2 ml-2',
-						href: '#',
-						onClick: this.handleStop()
-					}, 'stop'),
-					React.createElement('a', {
-						className: 'btn btn-secondary pl-2 ml-2',
-						href: '#',
-						onClick: this.handleReset
-					}, 'reset'),
-					React.createElement('a', {
-						className: 'btn btn-secondary pl-2 ml-2',
-						href: '#',
-						onClick: this.handleSave
-					}, 'add to list'),
-					React.createElement('a', {
-						className: 'btn btn-secondary pl-2 ml-2',
-						href: '#',
-						onClick: this.handleClear
-					}, 'clear list')
-				),
-				React.createElement('div', {id: 'stopwatch', className: "clock mt-3"}),
-				React.createElement('ul', {className: 'results'})
+			this.profile
 			)
-		);
+		}
 	}
-}
 
 Stopwatch.propTypes = {
 	running: React.PropTypes.bool.isRequired,
