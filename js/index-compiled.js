@@ -1,11 +1,5 @@
 "use strict";
 
-var _react = _interopRequireDefault(require("react"));
-
-var _reactDom = _interopRequireDefault(require("react-dom"));
-
-function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { "default": obj }; }
-
 function _typeof(obj) { if (typeof Symbol === "function" && typeof Symbol.iterator === "symbol") { _typeof = function _typeof(obj) { return typeof obj; }; } else { _typeof = function _typeof(obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; }; } return _typeof(obj); }
 
 function _toConsumableArray(arr) { return _arrayWithoutHoles(arr) || _iterableToArray(arr) || _nonIterableSpread(); }
@@ -24,15 +18,13 @@ function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _d
 
 function _possibleConstructorReturn(self, call) { if (call && (_typeof(call) === "object" || typeof call === "function")) { return call; } return _assertThisInitialized(self); }
 
-function _getPrototypeOf(o) { _getPrototypeOf = Object.setPrototypeOf ? Object.getPrototypeOf : function _getPrototypeOf(o) { return o.__proto__ || Object.getPrototypeOf(o); }; return _getPrototypeOf(o); }
-
 function _assertThisInitialized(self) { if (self === void 0) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return self; }
+
+function _getPrototypeOf(o) { _getPrototypeOf = Object.setPrototypeOf ? Object.getPrototypeOf : function _getPrototypeOf(o) { return o.__proto__ || Object.getPrototypeOf(o); }; return _getPrototypeOf(o); }
 
 function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function"); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, writable: true, configurable: true } }); if (superClass) _setPrototypeOf(subClass, superClass); }
 
 function _setPrototypeOf(o, p) { _setPrototypeOf = Object.setPrototypeOf || function _setPrototypeOf(o, p) { o.__proto__ = p; return o; }; return _setPrototypeOf(o, p); }
-
-function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
 
 var Stopwatch =
 /*#__PURE__*/
@@ -45,125 +37,9 @@ function (_React$Component) {
     _classCallCheck(this, Stopwatch);
 
     _this = _possibleConstructorReturn(this, _getPrototypeOf(Stopwatch).call(this, props));
-
-    _defineProperty(_assertThisInitialized(_this), "handleReset", function () {
-      _this.setState({
-        running: false,
-        times: {
-          minutes: 0,
-          seconds: 0,
-          miliseconds: 0
-        }
-      });
-    });
-
-    _defineProperty(_assertThisInitialized(_this), "handleStart", function () {
-      if (!_this.state.running) {
-        _this.setState({
-          running: true
-        });
-
-        _this.watch = setInterval(function () {
-          return _this.step();
-        }, 10);
-      }
-    });
-
-    _defineProperty(_assertThisInitialized(_this), "step", function () {
-      if (!_this.state.running) return _this.calculate();
-    });
-
-    _defineProperty(_assertThisInitialized(_this), "calculate", function () {
-      _this.setState(function (prevState) {
-        return {
-          times: {
-            miliseconds: [].concat(_toConsumableArray(prevState.times.miliseconds), [++_this.state.miliseconds])
-          }
-        };
-      });
-
-      if (_this.state.times.miliseconds >= 100) {
-        _this.setState(function (prevState) {
-          return {
-            times: {
-              seconds: [].concat(_toConsumableArray(prevState.times.seconds), [++_this.state.seconds]),
-              miliseconds: 0
-            }
-          };
-        });
-      }
-
-      if (_this.state.times.seconds >= 60) {
-        _this.setState(function (prevState) {
-          return {
-            times: {
-              minutes: [].concat(_toConsumableArray(prevState.times.minutes), [++_this.state.minutes]),
-              miliseconds: 0
-            }
-          };
-        });
-      }
-    });
-
-    _defineProperty(_assertThisInitialized(_this), "handleStop", function () {
-      _this.setState({
-        running: false
-      });
-
-      clearInterval(_this.watch);
-    });
-
-    _defineProperty(_assertThisInitialized(_this), "handleSave", function () {
-      return _react["default"].createElement(_react["default"].Fragment, null, "listItem = React.createItem('li',null,this.format(this.state.times)), ReactDOM.render(listItem, document.querySelector('.results'))");
-    });
-
-    _defineProperty(_assertThisInitialized(_this), "handleClear", function () {
-      listItem = '';
-    });
-
-    _defineProperty(_assertThisInitialized(_this), "pad0", function (value) {
-      var result = value.toString();
-
-      if (result.length < 2) {
-        result = '0' + result;
-      }
-    });
-
-    _defineProperty(_assertThisInitialized(_this), "render", function () {
-      return _react["default"].createElement("div", {
-        className: 'wrapper'
-      }, _react["default"].createElement("div", {
-        className: 'text-center mb-2 mt-3'
-      }, _react["default"].createElement("a", {
-        href: "#",
-        className: 'btn btn-secondary pl-2 ml-2',
-        onClick: _this.handleStart
-      }, "start"), _react["default"].createElement("a", {
-        href: "#",
-        className: 'btn btn-secondary pl-2 ml-2',
-        onClick: _this.handleStop
-      }, "stop"), _react["default"].createElement("a", {
-        href: "#",
-        className: 'btn btn-secondary pl-2 ml-2',
-        onClick: _this.handleReset
-      }, "reset"), _react["default"].createElement("a", {
-        href: "#",
-        className: 'btn btn-secondary pl-2 ml-2',
-        onClick: _this.handleSave
-      }, "add to list"), _react["default"].createElement("a", {
-        href: "#",
-        className: 'btn btn-secondary pl-2 ml-2',
-        onClick: _this.handleClear
-      }, "clear list")), _react["default"].createElement("div", {
-        id: 'stopwatch',
-        className: 'clock mt-3'
-      }), _react["default"].createElement("ul", {
-        className: 'results'
-      }));
-    });
-
     _this.state = {
       running: false,
+      listItem: [],
       times: {
         minutes: 0,
         seconds: 0,
@@ -174,20 +50,141 @@ function (_React$Component) {
   }
 
   _createClass(Stopwatch, [{
+    key: "randomString",
+    value: function randomString() {
+      var chars = '0123456789abcdefghiklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXTZ';
+      var str = '';
+
+      for (var i = 0; i < 10; i++) {
+        str += chars[Math.floor(Math.random() * chars.length)];
+      }
+
+      return str;
+    }
+  }, {
+    key: "handleReset",
+    value: function handleReset() {
+      this.setState({
+        times: {
+          minutes: 0,
+          seconds: 0,
+          miliseconds: 0
+        }
+      });
+    }
+  }, {
     key: "format",
     value: function format() {
       return "".concat(this.pad0(this.state.times.minutes), ":").concat(this.pad0(this.state.times.seconds), ":").concat(this.pad0(Math.floor(this.state.times.miliseconds)));
     }
+  }, {
+    key: "handleStart",
+    value: function handleStart() {
+      var _this2 = this;
+
+      if (!this.state.running) {
+        this.setState({
+          running: true
+        });
+        this.watch = setInterval(function () {
+          return _this2.step();
+        }, 10);
+      }
+    }
+  }, {
+    key: "step",
+    value: function step() {
+      if (!this.state.running) return this.calculate();
+    }
+  }, {
+    key: "calculate",
+    value: function calculate() {
+      var _this3 = this;
+
+      this.setState(function (prevState) {
+        return {
+          times: {
+            miliseconds: [].concat(_toConsumableArray(prevState.times.miliseconds), [++_this3.state.miliseconds])
+          }
+        };
+      });
+
+      if (this.state.times.miliseconds >= 100) {
+        this.setState(function (prevState) {
+          return {
+            times: {
+              seconds: [].concat(_toConsumableArray(prevState.times.seconds), [++_this3.state.seconds]),
+              miliseconds: 0
+            }
+          };
+        });
+      }
+
+      if (this.state.times.seconds >= 60) {
+        this.setState(function (prevState) {
+          return {
+            times: {
+              minutes: [].concat(_toConsumableArray(prevState.times.minutes), [++_this3.state.minutes]),
+              miliseconds: 0
+            }
+          };
+        });
+      }
+    }
+  }, {
+    key: "handleStop",
+    value: function handleStop() {
+      this.setState({
+        running: false
+      });
+      clearInterval(this.watch);
+    }
+  }, {
+    key: "handleSave",
+    value: function handleSave() {
+      if (listItem !== this.state.listItem[this.state.listItem.length - 1]) {
+        this.state.listItem = [].concat(_toConsumableArray(this.state.listItem), [{
+          id: this.randomString(),
+          time: this.format(this.state.times)
+        }]);
+      }
+    }
+  }, {
+    key: "handleClear",
+    value: function handleClear() {
+      listItem = '';
+    }
+  }, {
+    key: "pad0",
+    value: function pad0(value) {
+      var result = value.toString();
+
+      if (result.length < 2) {
+        result = '0' + result;
+      }
+    }
+  }, {
+    key: "formatTimeTable",
+    value: function formatTimeTable() {
+      var savedItems = [];
+
+      for (var i = 0; i < this.state.listItem.length; i++) {
+        savedItems.push("<li key={this.state.listItem[i].id}>{this.state.listItem[i].time}</li>");
+      }
+
+      return savedItems.map(function (savedItems) {
+        return "<li>{savedItems}</li>";
+      });
+    }
+  }, {
+    key: "render",
+    value: function render() {
+      return "<div className={'wrapper'}>\n\t\t\t\t<div className={'text-center mb-2 mt-3'}>\n\t\t\t\t\t<a href={\"#\"} className={'btn btn-secondary pl-2 ml-2'} onClick={this.handleStart}>start</a>\n\t\t\t\t\t<a href={\"#\"} className={'btn btn-secondary pl-2 ml-2'} onClick={this.handleStop}>stop</a>\n\t\t\t\t\t<a href={\"#\"} className={'btn btn-secondary pl-2 ml-2'} onClick={this.handleReset}>reset</a>\n\t\t\t\t\t<a href={\"#\"} className={'btn btn-secondary pl-2 ml-2'} onClick={this.handleSave}>add to list</a>\n\t\t\t\t\t<a href={\"#\"} className={'btn btn-secondary pl-2 ml-2'} onClick={this.handleClear}>clear list</a>\n\t\t\t\t</div>\n\t\t\t\t<div id={'stopwatch'} className={'clock mt-3'}></div>\n\t\t\t\t<ul className={'results'}>{this.formatTimeTable()}</ul>\n\t\t\t</div>";
+    }
   }]);
 
   return Stopwatch;
-}(_react["default"].Component);
+}(React.Component);
 
-Stopwatch.propTypes = {
-  running: _react["default"].PropTypes.bool.isRequired,
-  times: _react["default"].PropTypes.object.isRequired
-};
-
-var element = _react["default"].createElement(Stopwatch);
-
-_reactDom["default"].render(element, document.getElementById('app'));
+var element = React.createElement(Stopwatch);
+ReactDOM.render(element, document.getElementById('app'));

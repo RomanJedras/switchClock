@@ -1,11 +1,10 @@
-import React from 'react';
-import ReactDOM from 'react-dom';
 
 class Stopwatch extends React.Component {
 	constructor (props) {
 		super(props);
 		this.state = {
 			running: false,
+			listItem: [],
 			times: {
 				minutes: 0,
 				seconds: 0,
@@ -15,24 +14,31 @@ class Stopwatch extends React.Component {
 	}
 	
 	
-	handleReset = () => {
-		this.setState({
-				running: false,
-				times: {
-					minutes: 0,
-					seconds: 0,
-					miliseconds: 0
-				}
-			}
-		)
+	randomString() {
+		var chars = '0123456789abcdefghiklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXTZ';
+		var str = '';
+		for (let i = 0; i < 10; i++) {
+			str += chars[Math.floor(Math.random() * chars.length)];
+		}
+		return str;
 	}
 	
+	
+	handleReset() {
+		this.setState({
+			times: {
+				minutes: 0,
+				seconds: 0,
+				miliseconds: 0
+			}
+		});
+	}
 	
 	format () {
 		return `${this.pad0(this.state.times.minutes)}:${this.pad0(this.state.times.seconds)}:${this.pad0(Math.floor(this.state.times.miliseconds))}`;
 	}
 	
-	handleStart = () => {
+	handleStart(){
 		if (!this.state.running) {
 			this.setState({
 				running: true
@@ -41,11 +47,11 @@ class Stopwatch extends React.Component {
 		}
 	}
 	
-	step = () => {
+	step() {
 		if (!this.state.running) return this.calculate()
 	}
 	
-	calculate = () => {
+	calculate() {
 		
 		this.setState(prevState => ({
 				times: {
@@ -75,29 +81,30 @@ class Stopwatch extends React.Component {
 		}
 	};
 	
-	handleStop = () => {
+	handleStop() {
 		this.setState({
 			running: false
 		});
 		clearInterval(this.watch)
 	}
 	
-	handleSave = () => {
+	handleSave() {
 		
-		return (
-			<React.Fragment>
-			   listItem = React.createItem('li',null,this.format(this.state.times)),
-			   ReactDOM.render(listItem, document.querySelector('.results'))
-			</React.Fragment>
-		);
+		if (listItem !== this.state.listItem[this.state.listItem.length - 1]) {
+			
+			this.state.listItem = [...this.state.listItem, {
+				id: this.randomString(),
+				time: this.format(this.state.times)
+			}]
+		}
 	}
 	
-	handleClear = () => {
-		 listItem = ''
+	handleClear() {
+		listItem = ''
 	}
 	
 	
-	pad0 = (value) => {
+	pad0(value) {
 		let result = value.toString();
 		if (result.length < 2) {
 			result = '0' + result;
@@ -105,10 +112,20 @@ class Stopwatch extends React.Component {
 	}
 	
 	
+	formatTimeTable () {
+		let savedItems = [ ];
+		for (let i =0; i < this.state.listItem.length; i++) {
+			savedItems.push(`<li key={this.state.listItem[i].id}>{this.state.listItem[i].time}</li>`)
+		}
+		return savedItems.map(savedItems => (`<li>{savedItems}</li>`));
+		
+	}
 	
-	render = () => {
+	
+	
+	render (){
 		return (
-			<div className={'wrapper'}>
+			`<div className={'wrapper'}>
 				<div className={'text-center mb-2 mt-3'}>
 					<a href={"#"} className={'btn btn-secondary pl-2 ml-2'} onClick={this.handleStart}>start</a>
 					<a href={"#"} className={'btn btn-secondary pl-2 ml-2'} onClick={this.handleStop}>stop</a>
@@ -117,19 +134,16 @@ class Stopwatch extends React.Component {
 					<a href={"#"} className={'btn btn-secondary pl-2 ml-2'} onClick={this.handleClear}>clear list</a>
 				</div>
 				<div id={'stopwatch'} className={'clock mt-3'}></div>
-				<ul className={'results'}></ul>
-			</div>
-			)
-		}
+				<ul className={'results'}>{this.formatTimeTable()}</ul>
+			</div>`
+		)
 	}
-
-Stopwatch.propTypes = {
-	running: React.PropTypes.bool.isRequired,
-	times: React.PropTypes.object.isRequired,
 }
+
+
+
+
 
 
 const element = React.createElement(Stopwatch);
 ReactDOM.render(element, document.getElementById('app'));
-
-
