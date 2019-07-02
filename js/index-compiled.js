@@ -169,17 +169,48 @@ function (_React$Component) {
       var savedItems = [];
 
       for (var i = 0; i < this.state.listItem.length; i++) {
-        savedItems.push("<li key={this.state.listItem[i].id}>{this.state.listItem[i].time}</li>");
+        savedItems.push(React.createElement("li", {
+          key: this.state.listItem[i].id
+        }, this.state.listItem[i].time));
       }
 
       return savedItems.map(function (savedItems) {
-        return "<li>{savedItems}</li>";
+        return React.createElement("li", null, savedItems);
       });
     }
   }, {
     key: "render",
     value: function render() {
-      return "<div className={'wrapper'}>\n\t\t\t\t<div className={'text-center mb-2 mt-3'}>\n\t\t\t\t\t<a href={\"#\"} className={'btn btn-secondary pl-2 ml-2'} onClick={this.handleStart}>start</a>\n\t\t\t\t\t<a href={\"#\"} className={'btn btn-secondary pl-2 ml-2'} onClick={this.handleStop}>stop</a>\n\t\t\t\t\t<a href={\"#\"} className={'btn btn-secondary pl-2 ml-2'} onClick={this.handleReset}>reset</a>\n\t\t\t\t\t<a href={\"#\"} className={'btn btn-secondary pl-2 ml-2'} onClick={this.handleSave}>add to list</a>\n\t\t\t\t\t<a href={\"#\"} className={'btn btn-secondary pl-2 ml-2'} onClick={this.handleClear}>clear list</a>\n\t\t\t\t</div>\n\t\t\t\t<div id={'stopwatch'} className={'clock mt-3'}></div>\n\t\t\t\t<ul className={'results'}>{this.formatTimeTable()}</ul>\n\t\t\t</div>";
+      return React.createElement("div", {
+        className: 'wrapper'
+      }, React.createElement("div", {
+        className: 'text-center mb-2 mt-3'
+      }, React.createElement("a", {
+        href: "#",
+        className: 'btn btn-secondary pl-2 ml-2',
+        onClick: this.handleStart
+      }, "start"), React.createElement("a", {
+        href: "#",
+        className: 'btn btn-secondary pl-2 ml-2',
+        onClick: this.handleStop
+      }, "stop"), React.createElement("a", {
+        href: "#",
+        className: 'btn btn-secondary pl-2 ml-2',
+        onClick: this.handleReset
+      }, "reset"), React.createElement("a", {
+        href: "#",
+        className: 'btn btn-secondary pl-2 ml-2',
+        onClick: this.handleSave
+      }, "add to list"), React.createElement("a", {
+        href: "#",
+        className: 'btn btn-secondary pl-2 ml-2',
+        onClick: this.handleClear
+      }, "clear list")), React.createElement("div", {
+        id: 'stopwatch',
+        className: 'clock mt-3'
+      }), React.createElement("ul", {
+        className: 'results'
+      }, this.formatTimeTable()));
     }
   }]);
 

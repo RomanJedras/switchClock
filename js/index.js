@@ -1,3 +1,5 @@
+const React = require('react');
+const ReactDOM = require('react-dom');
 
 class Stopwatch extends React.Component {
 	constructor (props) {
@@ -100,7 +102,11 @@ class Stopwatch extends React.Component {
 	}
 	
 	handleClear() {
-		listItem = ''
+		this.setState({
+			listItem: []
+		})
+		
+		this.formatTimeTable();
 	}
 	
 	
@@ -115,9 +121,9 @@ class Stopwatch extends React.Component {
 	formatTimeTable () {
 		let savedItems = [ ];
 		for (let i =0; i < this.state.listItem.length; i++) {
-			savedItems.push(`<li key={this.state.listItem[i].id}>{this.state.listItem[i].time}</li>`)
+			savedItems.push('<li key={this.state.listItem[i].id}>{this.state.listItem[i].time}</li>')
 		}
-		return savedItems.map(savedItems => (`<li>{savedItems}</li>`));
+		return savedItems.map(savedItems => ('<li>{savedItems}</li>}'));
 		
 	}
 	
@@ -125,7 +131,7 @@ class Stopwatch extends React.Component {
 	
 	render (){
 		return (
-			`<div className={'wrapper'}>
+			<div className={'wrapper'}>
 				<div className={'text-center mb-2 mt-3'}>
 					<a href={"#"} className={'btn btn-secondary pl-2 ml-2'} onClick={this.handleStart}>start</a>
 					<a href={"#"} className={'btn btn-secondary pl-2 ml-2'} onClick={this.handleStop}>stop</a>
@@ -135,15 +141,10 @@ class Stopwatch extends React.Component {
 				</div>
 				<div id={'stopwatch'} className={'clock mt-3'}></div>
 				<ul className={'results'}>{this.formatTimeTable()}</ul>
-			</div>`
+			</div>
 		)
 	}
 }
-
-
-
-
-
 
 const element = React.createElement(Stopwatch);
 ReactDOM.render(element, document.getElementById('app'));
