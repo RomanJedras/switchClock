@@ -18,13 +18,15 @@ function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _d
 
 function _possibleConstructorReturn(self, call) { if (call && (_typeof(call) === "object" || typeof call === "function")) { return call; } return _assertThisInitialized(self); }
 
-function _assertThisInitialized(self) { if (self === void 0) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return self; }
-
 function _getPrototypeOf(o) { _getPrototypeOf = Object.setPrototypeOf ? Object.getPrototypeOf : function _getPrototypeOf(o) { return o.__proto__ || Object.getPrototypeOf(o); }; return _getPrototypeOf(o); }
+
+function _assertThisInitialized(self) { if (self === void 0) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return self; }
 
 function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function"); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, writable: true, configurable: true } }); if (superClass) _setPrototypeOf(subClass, superClass); }
 
 function _setPrototypeOf(o, p) { _setPrototypeOf = Object.setPrototypeOf || function _setPrototypeOf(o, p) { o.__proto__ = p; return o; }; return _setPrototypeOf(o, p); }
+
+function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
 
 var Stopwatch =
 /*#__PURE__*/
@@ -37,6 +39,79 @@ function (_React$Component) {
     _classCallCheck(this, Stopwatch);
 
     _this = _possibleConstructorReturn(this, _getPrototypeOf(Stopwatch).call(this, props));
+
+    _defineProperty(_assertThisInitialized(_this), "handleReset", function () {
+      _this.setState({
+        times: {
+          minutes: 0,
+          seconds: 0,
+          miliseconds: 0
+        }
+      });
+    });
+
+    _defineProperty(_assertThisInitialized(_this), "handleStart", function () {
+      if (!_this.state.running) {
+        _this.setState({
+          running: true
+        });
+
+        _this.watch = setInterval(function () {
+          return _this.step();
+        }, 10);
+      }
+    });
+
+    _defineProperty(_assertThisInitialized(_this), "calculate", function () {
+      var times = _this.state.times;
+      times.miliseconds += 1;
+
+      if (times.miliseconds >= 100) {
+        times.seconds += 1;
+        times.miliseconds = 0;
+      }
+
+      if (times.seconds >= 60) {
+        times.minutes += 1;
+        times.seconds = 0;
+      }
+
+      _this.setState({
+        times: times
+      }, function () {
+        console.log(times);
+      });
+    });
+
+    _defineProperty(_assertThisInitialized(_this), "handleStop", function () {
+      _this.setState({
+        running: false
+      });
+
+      clearInterval(_this.watch);
+    });
+
+    _defineProperty(_assertThisInitialized(_this), "handleAddToList", function () {
+      var listItem = Object.assign({}, {
+        id: _this.randomString(),
+        time: _this.format(_this.state.times)
+      });
+
+      _this.setState({
+        listItem: [].concat(_toConsumableArray(_this.state.listItem), [listItem])
+      }, function () {
+        console.log(_this.state.listItem);
+      });
+    });
+
+    _defineProperty(_assertThisInitialized(_this), "handleClear", function () {
+      _this.setState({
+        listItem: []
+      });
+
+      _this.formatTimeTable();
+    });
+
     _this.state = {
       running: false,
       listItem: [],
@@ -62,97 +137,15 @@ function (_React$Component) {
       return str;
     }
   }, {
-    key: "handleReset",
-    value: function handleReset() {
-      this.setState({
-        times: {
-          minutes: 0,
-          seconds: 0,
-          miliseconds: 0
-        }
-      });
-    }
-  }, {
     key: "format",
     value: function format() {
-      return "".concat(this.pad0(this.state.times.minutes), ":").concat(this.pad0(this.state.times.seconds), ":").concat(this.pad0(Math.floor(this.state.times.miliseconds)));
-    }
-  }, {
-    key: "handleStart",
-    value: function handleStart() {
-      var _this2 = this;
-
-      if (!this.state.running) {
-        this.setState({
-          running: true
-        });
-        this.watch = setInterval(function () {
-          return _this2.step();
-        }, 10);
-      }
+      return "".concat(this.pad0(this.state.times.minutes), ":").concat(this.pad0(this.state.times.seconds), ":").concat(this.pad0(this.state.times.miliseconds));
     }
   }, {
     key: "step",
     value: function step() {
-      if (!this.state.running) return this.calculate();
-    }
-  }, {
-    key: "calculate",
-    value: function calculate() {
-      var _this3 = this;
-
-      this.setState(function (prevState) {
-        return {
-          times: {
-            miliseconds: [].concat(_toConsumableArray(prevState.times.miliseconds), [++_this3.state.miliseconds])
-          }
-        };
-      });
-
-      if (this.state.times.miliseconds >= 100) {
-        this.setState(function (prevState) {
-          return {
-            times: {
-              seconds: [].concat(_toConsumableArray(prevState.times.seconds), [++_this3.state.seconds]),
-              miliseconds: 0
-            }
-          };
-        });
-      }
-
-      if (this.state.times.seconds >= 60) {
-        this.setState(function (prevState) {
-          return {
-            times: {
-              minutes: [].concat(_toConsumableArray(prevState.times.minutes), [++_this3.state.minutes]),
-              miliseconds: 0
-            }
-          };
-        });
-      }
-    }
-  }, {
-    key: "handleStop",
-    value: function handleStop() {
-      this.setState({
-        running: false
-      });
-      clearInterval(this.watch);
-    }
-  }, {
-    key: "handleSave",
-    value: function handleSave() {
-      if (listItem !== this.state.listItem[this.state.listItem.length - 1]) {
-        this.state.listItem = [].concat(_toConsumableArray(this.state.listItem), [{
-          id: this.randomString(),
-          time: this.format(this.state.times)
-        }]);
-      }
-    }
-  }, {
-    key: "handleClear",
-    value: function handleClear() {
-      listItem = '';
+      //console.log(this.state)
+      if (this.state.running) return this.calculate();
     }
   }, {
     key: "pad0",
@@ -160,7 +153,7 @@ function (_React$Component) {
       var result = value.toString();
 
       if (result.length < 2) {
-        result = '0' + result;
+        return '0' + result;
       }
     }
   }, {
@@ -169,13 +162,11 @@ function (_React$Component) {
       var savedItems = [];
 
       for (var i = 0; i < this.state.listItem.length; i++) {
-        savedItems.push(React.createElement("li", {
-          key: this.state.listItem[i].id
-        }, this.state.listItem[i].time));
+        savedItems.push('<li key={this.state.listItem[i].id}>{this.state.listItem[i].time}</li>');
       }
 
       return savedItems.map(function (savedItems) {
-        return React.createElement("li", null, savedItems);
+        return '<li>{savedItems}</li>}';
       });
     }
   }, {
@@ -200,7 +191,7 @@ function (_React$Component) {
       }, "reset"), React.createElement("a", {
         href: "#",
         className: 'btn btn-secondary pl-2 ml-2',
-        onClick: this.handleSave
+        onClick: this.handleAddToList
       }, "add to list"), React.createElement("a", {
         href: "#",
         className: 'btn btn-secondary pl-2 ml-2',

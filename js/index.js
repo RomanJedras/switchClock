@@ -25,7 +25,7 @@ class Stopwatch extends React.Component {
 	}
 	
 	
-	handleReset() {
+	handleReset = () => {
 		this.setState({
 			times: {
 				minutes: 0,
@@ -36,10 +36,10 @@ class Stopwatch extends React.Component {
 	}
 	
 	format () {
-		return `${this.pad0(this.state.times.minutes)}:${this.pad0(this.state.times.seconds)}:${this.pad0(Math.floor(this.state.times.miliseconds))}`;
+		return `${this.pad0(this.state.times.minutes)}:${this.pad0(this.state.times.seconds)}:${this.pad0(this.state.times.miliseconds)}`;
 	}
 	
-	handleStart(){
+	handleStart = () =>{
 		if (!this.state.running) {
 			this.setState({
 				running: true
@@ -49,58 +49,46 @@ class Stopwatch extends React.Component {
 	}
 	
 	step() {
-		if (!this.state.running) return this.calculate()
+		//console.log(this.state)
+		if (this.state.running) return this.calculate()
 	}
 	
-	calculate() {
-		
-		this.setState(prevState => ({
-				times: {
-					miliseconds: [...prevState.times.miliseconds, ++this.state.miliseconds]
-				}
-			})
-		)
-		
-		if (this.state.times.miliseconds >= 100) {
-			this.setState(prevState => ({
-				times: {
-					seconds: [...prevState.times.seconds, ++this.state.seconds],
-					miliseconds: 0
-				},
-			}))
+	calculate = () => {
+		const times = this.state.times;
+		times.miliseconds += 1;
+		if (times.miliseconds >= 100 ) {
+			times.seconds += 1;
+			times.miliseconds = 0;
 		}
-		
-		
-		if (this.state.times.seconds >= 60) {
-			this.setState(prevState => ({
-				times: {
-					minutes: [...prevState.times.minutes, ++this.state.minutes],
-					miliseconds: 0
-					
-				},
-			}))
+		if (times.seconds >= 60 ) {
+			times.minutes += 1;
+			times.seconds = 0;
 		}
+		this.setState({
+			times
+		},()=>{
+			console.log(times)
+		})
 	};
 	
-	handleStop() {
+	handleStop = () => {
 		this.setState({
 			running: false
 		});
 		clearInterval(this.watch)
 	}
 	
-	handleSave() {
+	handleAddToList = () => {
 		
-		if (listItem !== this.state.listItem[this.state.listItem.length - 1]) {
-			
-			this.state.listItem = [...this.state.listItem, {
-				id: this.randomString(),
-				time: this.format(this.state.times)
-			}]
-		}
+		const listItem = Object.assign({},{id: this.randomString(),time: this.format(this.state.times)});
+		this.setState({
+			listItem: [...this.state.listItem,listItem]
+		},()=>{
+			console.log(this.state.listItem)
+		})
 	}
 	
-	handleClear() {
+	handleClear = () => {
 		this.setState({
 			listItem: []
 		})
@@ -112,7 +100,7 @@ class Stopwatch extends React.Component {
 	pad0(value) {
 		let result = value.toString();
 		if (result.length < 2) {
-			result = '0' + result;
+			return  '0' + result;
 		}
 	}
 	
@@ -135,7 +123,7 @@ class Stopwatch extends React.Component {
 					<a href={"#"} className={'btn btn-secondary pl-2 ml-2'} onClick={this.handleStart}>start</a>
 					<a href={"#"} className={'btn btn-secondary pl-2 ml-2'} onClick={this.handleStop}>stop</a>
 					<a href={"#"} className={'btn btn-secondary pl-2 ml-2'} onClick={this.handleReset}>reset</a>
-					<a href={"#"} className={'btn btn-secondary pl-2 ml-2'} onClick={this.handleSave}>add to list</a>
+					<a href={"#"} className={'btn btn-secondary pl-2 ml-2'} onClick={this.handleAddToList}>add to list</a>
 					<a href={"#"} className={'btn btn-secondary pl-2 ml-2'} onClick={this.handleClear}>clear list</a>
 				</div>
 				<div id={'stopwatch'} className={'clock mt-3'}></div>
