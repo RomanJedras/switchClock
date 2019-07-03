@@ -1,3 +1,3 @@
-/* line 1, sass/style.scss */ .clock { font-size: 52px; letter-spacing: 5px; }
+/* line 1, sass/style.scss */ .clock { font-size: 52px; letter-spacing: 5px; display: flex; justify-content: center;}
 
-/* line 6, sass/style.scss */ .results { font-size: 28px; list-style-type: none; }
+/* line 6, sass/style.scss */ .results { font-size: 28px; list-style-type: none; display: flex; align-items: center;flex-direction: column; }

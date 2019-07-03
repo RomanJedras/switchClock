@@ -78,8 +78,6 @@ function (_React$Component) {
 
       _this.setState({
         times: times
-      }, function () {
-        console.log(times);
       });
     });
 
@@ -92,15 +90,15 @@ function (_React$Component) {
     });
 
     _defineProperty(_assertThisInitialized(_this), "handleAddToList", function () {
+      var savedTime = _this.format(_this.state.times);
+
       var listItem = Object.assign({}, {
         id: _this.randomString(),
-        time: _this.format(_this.state.times)
+        time: savedTime
       });
 
       _this.setState({
         listItem: [].concat(_toConsumableArray(_this.state.listItem), [listItem])
-      }, function () {
-        console.log(_this.state.listItem);
       });
     });
 
@@ -138,7 +136,7 @@ function (_React$Component) {
     }
   }, {
     key: "format",
-    value: function format() {
+    value: function format(times) {
       return "".concat(this.pad0(this.state.times.minutes), ":").concat(this.pad0(this.state.times.seconds), ":").concat(this.pad0(this.state.times.miliseconds));
     }
   }, {
@@ -153,8 +151,10 @@ function (_React$Component) {
       var result = value.toString();
 
       if (result.length < 2) {
-        return '0' + result;
+        result = '0' + result;
       }
+
+      return result;
     }
   }, {
     key: "formatTimeTable",
@@ -162,11 +162,13 @@ function (_React$Component) {
       var savedItems = [];
 
       for (var i = 0; i < this.state.listItem.length; i++) {
-        savedItems.push('<li key={this.state.listItem[i].id}>{this.state.listItem[i].time}</li>');
+        savedItems.push(React.createElement("li", {
+          key: this.state.listItem[i].id
+        }, this.state.listItem[i].time));
       }
 
       return savedItems.map(function (savedItems) {
-        return '<li>{savedItems}</li>}';
+        return savedItems;
       });
     }
   }, {
@@ -199,7 +201,7 @@ function (_React$Component) {
       }, "clear list")), React.createElement("div", {
         id: 'stopwatch',
         className: 'clock mt-3'
-      }), React.createElement("ul", {
+      }, React.createElement("h3", null, this.format())), React.createElement("ul", {
         className: 'results'
       }, this.formatTimeTable()));
     }

@@ -35,7 +35,8 @@ class Stopwatch extends React.Component {
 		});
 	}
 	
-	format () {
+	format (times) {
+		
 		return `${this.pad0(this.state.times.minutes)}:${this.pad0(this.state.times.seconds)}:${this.pad0(this.state.times.miliseconds)}`;
 	}
 	
@@ -66,8 +67,6 @@ class Stopwatch extends React.Component {
 		}
 		this.setState({
 			times
-		},()=>{
-			console.log(times)
 		})
 	};
 	
@@ -79,12 +78,13 @@ class Stopwatch extends React.Component {
 	}
 	
 	handleAddToList = () => {
+		let savedTime = this.format(this.state.times);
 		
-		const listItem = Object.assign({},{id: this.randomString(),time: this.format(this.state.times)});
+		const listItem = Object.assign({},{id: this.randomString(),time: savedTime});
+		
+		
 		this.setState({
 			listItem: [...this.state.listItem,listItem]
-		},()=>{
-			console.log(this.state.listItem)
 		})
 	}
 	
@@ -100,21 +100,20 @@ class Stopwatch extends React.Component {
 	pad0(value) {
 		let result = value.toString();
 		if (result.length < 2) {
-			return  '0' + result;
+			result = '0' + result;
 		}
+		return result;
 	}
 	
 	
 	formatTimeTable () {
 		let savedItems = [ ];
 		for (let i =0; i < this.state.listItem.length; i++) {
-			savedItems.push('<li key={this.state.listItem[i].id}>{this.state.listItem[i].time}</li>')
+			savedItems.push(<li key={this.state.listItem[i].id}>{this.state.listItem[i].time}</li>)
 		}
-		return savedItems.map(savedItems => ('<li>{savedItems}</li>}'));
 		
+		return savedItems.map(savedItems => ( savedItems));
 	}
-	
-	
 	
 	render (){
 		return (
@@ -126,7 +125,9 @@ class Stopwatch extends React.Component {
 					<a href={"#"} className={'btn btn-secondary pl-2 ml-2'} onClick={this.handleAddToList}>add to list</a>
 					<a href={"#"} className={'btn btn-secondary pl-2 ml-2'} onClick={this.handleClear}>clear list</a>
 				</div>
-				<div id={'stopwatch'} className={'clock mt-3'}></div>
+				<div id={'stopwatch'} className={'clock mt-3'}>
+					<h3>{this.format()}</h3>
+				</div>
 				<ul className={'results'}>{this.formatTimeTable()}</ul>
 			</div>
 		)
